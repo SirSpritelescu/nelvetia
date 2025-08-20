@@ -3,6 +3,8 @@ from typing import List, Dict, Any
 from fastapi import FastAPI, WebSocket
 from fastapi.websockets import WebSocketDisconnect
 from openai import AsyncOpenAI
+from fastapi.responses import JSONResponse
+
 
 BASE_URL = os.getenv("OPENAI_BASE_URL", "https://api.deepinfra.com/v1/openai")
 API_KEY = os.getenv("OPENAI_API_KEY", "REPLACE_ME")
@@ -106,3 +108,8 @@ def prepare_prompt(req_data: Dict[str, Any]) -> List[Dict[str, str]]:
         role = "assistant" if turn.get("role") == "assistant" else "user"
         messages.append({ "role": role, "content": turn.get("content") or "" })
     return messages
+
+@app.get("/health")
+def health():
+    return JSONResponse({"status": "ok"})
+
