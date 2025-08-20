@@ -113,3 +113,8 @@ def prepare_prompt(req_data: Dict[str, Any]) -> List[Dict[str, str]]:
 def health():
     return JSONResponse({"status": "ok"})
 
+@app.get("/ping")
+def ping():
+    return {"pong": True}
+
+
